@@ -60,6 +60,7 @@ def check_gpu_and_torch_compatibility():
             )
         else:
             bash_command = "nvidia-smi --query-gpu=name --format=csv"
+            output = ""
             try:
                 output = execute_bash_command(bash_command).decode()
             except Exception as e:
