@@ -74,5 +74,12 @@ def check_gpu_and_torch_compatibility():
                     "-f",
                     "https://download.pytorch.org/whl/torch_stable.html",
                 )
+            else:
+                install_and_import(
+                    "torch",
+                    "1.11.0",
+                    "-f",
+                    "https://download.pytorch.org/whl/torch_stable.html",
+                )
     except OSError:
         logging.info("GPU device is not available")
