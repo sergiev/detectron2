@@ -31,7 +31,7 @@ def install_and_import(package, version="", params="", link="", packageimportnam
             [sys.executable, "-m", "pip", *installation_cmd_list]
         )
     finally:
-        if packageimportname is None:
+        if not packageimportname:
             globals()[package] = importlib.import_module(package)
         else:
             globals()[packageimportname] = importlib.import_module(packageimportname)
