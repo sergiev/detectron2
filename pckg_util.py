@@ -60,7 +60,17 @@ def check_gpu_and_torch_compatibility():
             )
         else:
             bash_command = "nvidia-smi --query-gpu=name --format=csv"
-            output = execute_bash_command(bash_command).decode()
+            try:
+                output = execute_bash_command(bash_command).decode()
+            except Exception as e:
+                install_and_import(
+                    "torch",
+                    "1.11.0",
+                    "-f",
+                    "https://download.pytorch.org/whl/torch_stable.html",
+                )
+
+
             if "NVIDIA A100" in output:
                 install_and_import(
                     "torch",
@@ -81,5 +91,5 @@ def check_gpu_and_torch_compatibility():
                     "-f",
                     "https://download.pytorch.org/whl/torch_stable.html",
                 )
-    except OSError:
+    except OSError as e:
         logging.info("GPU device is not available")
