@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# Copyright (c) Facebook, Inc. and its affiliates.
 from pckg_util import check_gpu_and_torch_compatibility
 
 check_gpu_and_torch_compatibility()
