@@ -26,9 +26,11 @@ def install_and_import(package, version="", params="", link="", packageimportnam
 
         if link:
             installation_cmd_list.append(link)
-
-        subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
-        subprocess.check_call([sys.executable, "-m", "pip", *installation_cmd_list])
+        try:
+            subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
+            subprocess.check_call([sys.executable, "-m", "pip", *installation_cmd_list])
+        except Exception as e:
+            print(e)
     finally:
         if not packageimportname:
             globals()[package] = importlib.import_module(package)
