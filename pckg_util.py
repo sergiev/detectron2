@@ -49,9 +49,16 @@ def execute_bash_command(cmd):
 
 
 def check_gpu_and_torch_compatibility():
+    bash_command = "nvidia-smi --query-gpu=name --format=csv"
     try:
+        execute_bash_command(bash_command).decode()
+    except OSError as e:
+        logging.info("GPU device is not available")
+        
+    try:
+        import torch
+    except Exception as e:
         import platform
-
         if platform.system() == "Windows":
             install_and_import(
                 "torch",
@@ -60,14 +67,4 @@ def check_gpu_and_torch_compatibility():
                 "https://download.pytorch.org/whl/torch_stable.html",
             )
         else:
-            bash_command = "nvidia-smi --query-gpu=name --format=csv"
-            output = ""
-            try:
-                output = execute_bash_command(bash_command).decode()
-            except Exception as e:
-                try:
-                    import torch
-                except Exception as e:
-                    install_and_import("torch")
-    except OSError as e:
-        logging.info("GPU device is not available")
+            install_and_import("torch")
